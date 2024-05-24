@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Shopping Cart</title>
+        <style>
+            .product-card {
+                display: flex;
+                align-items: center;
+                padding: 15px;
+            }
+
+            .remove-btn {
+                background-color: rgb(253, 62, 19);
+                color: white;
+                border-radius: 3px;
+                padding: 5px;
+                border: 0px;
+            }
+
+            #error-message {
+                display: inline;
+                padding-left: 10px;
+                color: red;
+                font-weight: bold;
+            }
+        </style>
+    </head>
+    <body>
+        <h1>Shopping Cart</h1>
+        <h2>Add Item for Selection</h2>
+        <form id="create-product" style="padding-bottom: 20px;">
+            <label for="product-name">Product Name:</label>
+            <input type="text" id="product-name" required>
+
+            <label for="product-price">Price:</label>
+            <input type="text" id="product-price" required>
+
+            <label for="image-url">Image:</label>
+            <input type="text" id="image-url" required>
+
+            <button type="submit">Create Product</button>
+            <p id="error-message">Hi</p>
+        </form>
+
+
+        <form>
+            <div id="dashboard" style="border: solid black 1px;">
+                <div class="product-card">
+                    <input type="checkbox" id="product-1">
+                    <img src="colmar-academy-spec.png" height="120" width="120">
+                    <div style="padding-left: 15px;">
+                        <h3>Product 1</h3>
+                        <p>$10.00</p>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <input type="checkbox" id="product-2">
+                    <img src="colmar-academy-spec.png" height="120" width="120">
+                    <div style="padding-left: 15px;">
+                        <h3>Product 2</h3>
+                        <p>$10.00</p>
+                    </div>
+                </div>
+            </div>
+            <button id="add-to-cart" type="submit">Add to Cart</button>
+        </form>
+
+        <br>
+
+        <form> 
+            <div id="cart" style="border: solid black 1px;">
+                <div class="product-card">
+                    <img src="colmar-academy-spec.png" height="120" width="120">
+                    <div style="padding-left: 15px;">
+                        <h3>Product 1</h3>
+                        <p>$10.00</p>
+                        <button class="remove-btn">Remove</button>
+                    </div>
+                </div>
+                <div class="product-card">
+                    <img src="colmar-academy-spec.png" height="120" width="120">
+                    <div style="padding-left: 15px;">
+                        <h3>Product 2</h3>
+                        <p>$10.00</p>
+                    </div>
+                </div>
+            </div>
+            <button id="calculate-final-price" type="submit">Calculate Final Price</button>
+        </form>
+
+        <h2>You have to pay: 10</h2>
+        <script>document.getElementById("product-1").checked = true;</script>
+        <script src="script.js"></script>
+    </body>
+</html>
