@@ -3,7 +3,7 @@ const createProductForm = document.getElementById("create-product");
 const dashboard = document.getElementById("dashboard");
 
 const allProducts = []; // to simplify cart process later
-let numProducts = 0;
+let idCounter = 0;
 
 createProductForm.addEventListener("submit", event => {
     event.preventDefault();
@@ -15,7 +15,7 @@ createProductForm.addEventListener("submit", event => {
     const productName = nameField.value.trim();
     let productPrice = priceField.value.trim();
     const imageURL = imageField.value.trim();
-    const errorMessage = document.getElementById("error-message");
+    const errorMessage = document.getElementById("error-message-create");
 
     // Validation Process
     if (!isValidImgUrl(imageURL)) {
@@ -30,7 +30,7 @@ createProductForm.addEventListener("submit", event => {
 
     // Creating Product object to add to inventory to simplify cart process later
     const product = {
-        id: numProducts++,
+        id: idCounter++,
         name: productName,
         price: productPrice,
         url: imageURL
@@ -46,17 +46,28 @@ createProductForm.addEventListener("submit", event => {
     imageField.value = "";
 });
 
-// 3.2 Handle Add to Cart
-const cart = [];
+// 3.2 & 3.3 Handle User Selection + Add to Cart
+let cart = [];
 const addToCartForm = document.getElementById("add-to-cart");
 const addToCartBtn = document.getElementById("add-to-cart-btn");
+const cartDisplay = document.getElementById("cart");
 
 addToCartForm.addEventListener("submit", event => {
     event.preventDefault();
+    cart = []; // Reset cart to match the selected items
 
+    // Add checked items into cart array
+    for (let i = 0; i < allProducts.length; i++) {
+        if (document.getElementById(`product-${i}`).checked) {
+            cart.push(allProducts[i]);
+        }
+    }
 
+    renderCart(cart);
 });
 
+// 3.3
+const calculateTotalBtn = document.getElementById("calculate-total-btn");
 // ================== HELPER FUNCTIONS =====================
 
 // Check that price is valid. Input is a string
@@ -72,20 +83,37 @@ function isValidImgUrl(imageURL) {
 }
 
 function addToDashboard(product) {
-    // dashboard.innerHTML += `
-    //     <div class="product-card">
-    //         <input type="checkbox" id="product-${product.id}">
-    //         <img src="${product.url}" height="120" width="120">
-    //         <div style="padding-left: 15px;">
-    //             <h3>${product.name}</h3>
-    //             <p>$${product.price.toFixed(2)}</p>
-    //         </div>
-    //     </div>
-    // `;
-
     dashboard.appendChild(createProductCard(product, false));
     // Dashboard has at least 1 product now, so we can display add-to-cart button
     addToCartBtn.style.display = "inline";
+}
+
+function renderCart(cartArray) {
+    const errorMessage = document.getElementById("error-message-cart");
+    if (cartArray.length === 0) {
+        errorMessage.textContent = "Please select at least 1 product.";
+        return
+    }
+    else errorMessage.textContent = "";
+
+    cartDisplay.innerHTML = ""; 
+    for (const item of cartArray) cartDisplay.appendChild(createProductCard(item, true));
+
+    calculateTotalBtn.style.display = "block";
+}
+
+function removeFromCart(event) {
+    const indexToDelete = parseInt(event.target.id.substring(5));
+    cart = cart.filter(product => product.id !== indexToDelete);     
+
+    // Avoid conflict with renderCart array length check
+    if (cart.length === 0) {
+        cartDisplay.innerHTML = ""; 
+        calculateTotalBtn.style.display = "none";
+        return;
+    }
+
+    renderCart(cart);
 }
 
 function createProductCard(product, forCart) {
@@ -107,21 +135,32 @@ function createProductCard(product, forCart) {
 
     const infoContainer = document.createElement("div");
     infoContainer.style.paddingLeft = "15px";
-    infoContainer.appendChild(cardName);
+    infoContainer.append(cardName, cardPrice);
     infoContainer.appendChild(cardPrice);
 
-    if (forCart) ;
+    if (forCart) {
+        const removBtn = document.createElement("button");
+        removBtn.className = "remove-btn";
+        removBtn.textContent = "Remove";
+        removBtn.setAttribute("type", "button");
+        removBtn.id = `cart-${product.id}`;
+        removBtn.addEventListener("click", removeFromCart);
+        infoContainer.appendChild(removBtn);
+    }
 
     const cardImg = new Image(120, 120);
     cardImg.src = product.url;
 
-    const checkbox = document.createElement("input");
-    checkbox.setAttribute("type", "checkbox");
-    checkbox.id = `product-${product.id}`;
-
     const productCard = document.createElement("div");
     productCard.className = "product-card";
-    productCard.appendChild(checkbox);
+
+    if (!forCart) {
+        const checkbox = document.createElement("input");
+        checkbox.setAttribute("type", "checkbox");
+        checkbox.id = `product-${product.id}`;
+        productCard.appendChild(checkbox);
+    }
+
     productCard.appendChild(cardImg);
     productCard.appendChild(infoContainer);
     

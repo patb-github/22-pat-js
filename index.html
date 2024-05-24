@@ -19,13 +19,16 @@
                 border: 0px;
             }
 
-            #error-message {
+            .error-message {
                 display: inline;
                 padding-left: 10px;
                 color: red;
                 font-weight: bold;
             }
 
+            .hidden {
+                display: none;
+            }
         </style>
     </head>
     <body>
@@ -42,7 +45,7 @@
             <input type="text" id="image-url" required>
 
             <button type="submit">Create Product</button>
-            <p id="error-message"></p>
+            <p id="error-message-create" class="error-message"></p>
         </form>
 
 
@@ -51,29 +54,15 @@
                 <!-- Products in Dashboard -->
             </div>
             <button id="add-to-cart-btn" type="submit" style="display: none;">Add to Cart</button>
+            <p id="error-message-cart" class="error-message"></p>
         </form>
 
         <br>
 
-        <form> 
+        <form id="calculate-total"> 
             <div id="cart" style="border: solid black 1px;">
-                <div class="product-card">
-                    <img src="colmar-academy-spec.png" height="120" width="120">
-                    <div style="padding-left: 15px;">
-                        <h3>Product 1</h3>
-                        <p>$10.00</p>
-                        <button class="remove-btn">Remove</button>
-                    </div>
-                </div>
-                <div class="product-card">
-                    <img src="colmar-academy-spec.png" height="120" width="120">
-                    <div style="padding-left: 15px;">
-                        <h3>Product 2</h3>
-                        <p>$10.00</p>
-                    </div>
-                </div>
             </div>
-            <button id="calculate-final-price" type="submit">Calculate Final Price</button>
+            <button id="calculate-total-btn" type="submit" class="hidden">Calculate Final Price</button>
         </form>
 
         <h2>You have to pay: 10</h2>
