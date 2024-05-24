@@ -48,24 +48,21 @@
             <p id="error-message-create" class="error-message"></p>
         </form>
 
-
+        <h2>Product Dashboard</h2>
         <form id="add-to-cart">
-            <div id="dashboard" style="border: solid black 1px;">
+            <div id="dashboard" style="border: solid black 1px; min-height: 50px;">
                 <!-- Products in Dashboard -->
             </div>
             <button id="add-to-cart-btn" type="submit" style="display: none;">Add to Cart</button>
             <p id="error-message-cart" class="error-message"></p>
         </form>
 
-        <br>
+        <h2>Cart</h2>
+        <div id="cart" style="border: solid black 1px; min-height: 50px;">
+        </div>
+        <button id="calculate-total-btn" type="button" class="hidden">Calculate Final Price</button>
 
-        <form id="calculate-total"> 
-            <div id="cart" style="border: solid black 1px;">
-            </div>
-            <button id="calculate-total-btn" type="submit" class="hidden">Calculate Final Price</button>
-        </form>
-
-        <h2>You have to pay: 10</h2>
+        <h2 id="final-price-container"></h2>
         <script src="script.js"></script>
     </body>
 </html>

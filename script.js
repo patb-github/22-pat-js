@@ -66,8 +66,14 @@ addToCartForm.addEventListener("submit", event => {
     renderCart(cart);
 });
 
-// 3.3
+// 3.3 Calculate Final Price
 const calculateTotalBtn = document.getElementById("calculate-total-btn");
+calculateTotalBtn.addEventListener("click", () => {
+    let sum = 0;
+    for (const product of cart) sum += product.price;
+    document.getElementById("final-price-container").textContent = `You have to pay: $${sum.toFixed(2)}`;
+});
+
 // ================== HELPER FUNCTIONS =====================
 
 // Check that price is valid. Input is a string
@@ -142,7 +148,7 @@ function createProductCard(product, forCart) {
         const removBtn = document.createElement("button");
         removBtn.className = "remove-btn";
         removBtn.textContent = "Remove";
-        removBtn.setAttribute("type", "button");
+        removBtn.setAttribute("type", "button"); // prevents refreshing the page because default type is submit
         removBtn.id = `cart-${product.id}`;
         removBtn.addEventListener("click", removeFromCart);
         infoContainer.appendChild(removBtn);
