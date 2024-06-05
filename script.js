@@ -40,10 +40,11 @@ createProductForm.addEventListener("submit", event => {
     // Add product to dashboard
     addToDashboard(product);
 
-    // Clear input fields after successful addition
+    // Clear input fields and error message after successful addition
     nameField.value = "";
     priceField.value = "";
     imageField.value = "";
+    errorMessage.textContent = "";
 });
 
 // 3.2 & 3.3 Handle User Selection + Add to Cart
@@ -129,7 +130,7 @@ function createProductCard(product, forCart) {
             <img src="${product.url}" height="120" width="120">
             <div style="padding-left: 15px;">
                 <h3>${product.name}</h3>
-                <p>$${product.price.toFixed(2)}</p>
+                <p>${product.price.toFixed(2)}</p>
             </div>
         </div>
     */
